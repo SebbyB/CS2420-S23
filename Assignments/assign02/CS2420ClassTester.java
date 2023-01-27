@@ -37,7 +37,7 @@ public class CS2420ClassTester {
         averageClass = new CS2420Class();
         stonerClass = new CS2420Class();
         String stoner = "stoner", prepper = "prepper";
-        for(int numStudents = 0; numStudents < n; numStudents++) {
+        for(int numStudents = 1; numStudents <= n; numStudents++) {
             String domain = "gmail.com";
 
 
@@ -53,8 +53,8 @@ public class CS2420ClassTester {
 
 
             //Creates students.
-            CS2420Student studentPrepper = new CS2420Student(fn, ln, uNid*2, addressPrepper);
-            CS2420Student studentStoner = new CS2420Student(fn, ln, uNid*3, addressStoner);
+            CS2420Student studentPrepper = new CS2420Student(fn, ln, uNid+n, addressPrepper);
+            CS2420Student studentStoner = new CS2420Student(fn, ln, uNid+n*2, addressStoner);
             CS2420Student student = new CS2420Student(fn, ln, uNid, address);
 
             //Adds students to their respective classes.
@@ -65,22 +65,21 @@ public class CS2420ClassTester {
             //Gives some scores to the students.
             for (int numAssignments = 0; numAssignments < n; numAssignments++) {
                 //Gives perfect scores to the prepper Class.
-                prepperClass.addScore(uNid, 100, "assignment");
-                prepperClass.addScore(uNid, 100, "lab");
-                prepperClass.addScore(uNid, 100, "exam");
-                prepperClass.addScore(uNid, 100, "quiz");
+                prepperClass.addScore(uNid+n, 100, "assignment");
+                prepperClass.addScore(uNid+n, 100, "lab");
+                prepperClass.addScore(uNid+n, 100, "exam");
+                prepperClass.addScore(uNid+n, 100, "quiz");
                 //Gives Zeros to the StonerClass
-                stonerClass.addScore(uNid, 0, "assignment");
-                stonerClass.addScore(uNid, 0, "lab");
-                stonerClass.addScore(uNid, 0, "exam");
-                stonerClass.addScore(uNid, 0, "quiz");
+                stonerClass.addScore(uNid+n*2, 0, "assignment");
+                stonerClass.addScore(uNid+n*2, 0, "lab");
+                stonerClass.addScore(uNid+n*2, 0, "exam");
+                stonerClass.addScore(uNid+n*2, 0, "quiz");
                 //Gives an average score based on the number of assignments for the averageClass.
                 averageClass.addScore(uNid,numAssignments, "assignment");
                 averageClass.addScore(uNid, numAssignments, "lab");
                 averageClass.addScore(uNid, numAssignments, "exam");
                 averageClass.addScore(uNid, numAssignments, "quiz");
             }
-
         }
 
 
@@ -395,21 +394,6 @@ public class CS2420ClassTester {
         assertEquals(0, emptyClass.computeClassAverage(), 0);
     }
 
-    @Test
-    public void differentAverages(){
-        assertEquals(0,stonerClass.computeClassAverage());
-
-        double avg = prepperClass.computeClassAverage();
-        assertEquals(100,avg);
-
-
-        double sum = 0,average;
-        for(int i = 0; i < n; i++){
-            sum+=i;
-        }
-        average = sum/n;
-        assertEquals(average,stonerClass.computeClassAverage());
-    }
 
     @Test
     public void testSmallComputeClassAverage() {
@@ -510,7 +494,7 @@ public class CS2420ClassTester {
             assertNotEquals(stoner.computeFinalGrade(),"D+");
             assertNotEquals(stoner.computeFinalGrade(),"D");
             assertNotEquals(stoner.computeFinalGrade(),"D-");
-            assertEquals(stoner.computeFinalGrade(),"N/A");
+            assertEquals(stoner.computeFinalGrade(),"E");
         }
     }
 
@@ -521,7 +505,7 @@ public class CS2420ClassTester {
         for(EmailAddress address: stonedList){
             CS2420Student prepper = prepperClass.lookup(address).get(0);
             assertEquals(prepper.computeFinalScore(),100);
-            assertNotEquals(prepper.computeFinalGrade(),"A");
+            assertEquals(prepper.computeFinalGrade(),"A");
             assertNotEquals(prepper.computeFinalGrade(),"A-");
             assertNotEquals(prepper.computeFinalGrade(),"B+");
             assertNotEquals(prepper.computeFinalGrade(),"B");
@@ -532,19 +516,19 @@ public class CS2420ClassTester {
             assertNotEquals(prepper.computeFinalGrade(),"D+");
             assertNotEquals(prepper.computeFinalGrade(),"D");
             assertNotEquals(prepper.computeFinalGrade(),"D-");
-            assertEquals(prepper.computeFinalGrade(),"E");
+            assertNotEquals(prepper.computeFinalGrade(),"E");
         }
     }    
     @Test
     public void finalScoresAverage(){
 
-        ArrayList<EmailAddress> stonedList = averageClass.getContactList();
+        ArrayList<EmailAddress> averageList = averageClass.getContactList();
         double avg, sum = 0;
         for(int i = 0; i < n; i++){
             sum+=i;
         }
         avg = sum/n;
-        for(EmailAddress address: stonedList){
+        for(EmailAddress address: averageList){
             CS2420Student average = averageClass.lookup(address).get(0);
             assertEquals(average.computeFinalScore(),avg);
             assertNotEquals(average.computeFinalGrade(),"A");
