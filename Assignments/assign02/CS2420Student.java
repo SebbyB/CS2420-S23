@@ -10,6 +10,7 @@ public class CS2420Student extends UofUStudent{
     private ArrayList<Double> exams;
     private ArrayList<Double> quizzes;
 
+
     public CS2420Student(String firstName, String lastName, int uNID, EmailAddress contactInfo) {
         super(firstName, lastName, uNID);
         this.studentEmail = contactInfo;
