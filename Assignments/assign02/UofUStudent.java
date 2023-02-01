@@ -1,12 +1,10 @@
 package assign02;
 
-import assign01.GrayscaleImage;
-
 /**
  * This class represents a University of Utah student, in which the uNID cannot
  * change once the student is created.  Note that each student's uNID is unique.
  *
- * @author Erin Parker and ??
+ * @author Erin Parker and Joshua Schell and Sebstian Barney
  * @version January 20, 2022
  */
 public class UofUStudent {

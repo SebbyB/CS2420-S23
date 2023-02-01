@@ -2,6 +2,12 @@ package assign02;
 
 import java.util.ArrayList;
 
+/**
+ * This Java class represents a UofU student who is taking CS2420
+ *
+ * @author Joshua Schell and Sebstian Barney
+ * @version January 22, 2022
+ */
 public class CS2420Student extends UofUStudent{
 
     private EmailAddress studentEmail;
@@ -10,7 +16,14 @@ public class CS2420Student extends UofUStudent{
     private ArrayList<Double> exams;
     private ArrayList<Double> quizzes;
 
-
+    /**
+     * Constructs a CS2420 student object
+     *
+     * @param firstName first name of student
+     * @param lastName last name of student
+     * @param uNID student's uNID
+     * @param contactInfo how to contact student
+     */
     public CS2420Student(String firstName, String lastName, int uNID, EmailAddress contactInfo) {
         super(firstName, lastName, uNID);
         this.studentEmail = contactInfo;
@@ -20,8 +33,19 @@ public class CS2420Student extends UofUStudent{
         quizzes     = new ArrayList<Double>();
     }
 
+    /**
+     * Retrieves Student's email
+     *
+     * @return student's email address
+     */
     public EmailAddress getContactInfo() { return this.studentEmail; }
 
+    /**
+     * Adds the score student receive into appropriate category
+     *
+     * @param score the score the student received
+     * @param category which category score should be added to
+     */
     public void addScore(double score, String category) {
         switch (category) {
             case "assignment" -> assignments.add(score);
@@ -31,6 +55,11 @@ public class CS2420Student extends UofUStudent{
         }
     }
 
+    /**
+     * Computes the final score of a student
+     *
+     * @return the final score the will student receive at the end of the class
+     */
     public double computeFinalScore() {
         double assignmentsTotal = 0, examsTotal = 0, labsTotal = 0, quizzesTotal = 0;
 
@@ -57,6 +86,11 @@ public class CS2420Student extends UofUStudent{
                 (labsTotal/labs.size()) * .1 + (quizzesTotal/quizzes.size()) * .1);
     }
 
+    /**
+     * Computes the student's final letter grade
+     *
+     * @return student's final letter grade
+     */
     public String computeFinalGrade() {
         if(assignments.isEmpty() || labs.isEmpty() || exams.isEmpty() || quizzes.isEmpty())
             return "N/A";

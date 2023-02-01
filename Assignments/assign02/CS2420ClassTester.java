@@ -4,20 +4,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This class contains tests for CS2420Class.
  *
- * @author Erin Parker and ??
+ * @author Erin Parker and Joshua Schell and Sebstian Barney
  * @version January 20, 2022
  */
 public class CS2420ClassTester {
 
-    private CS2420Class emptyClass, verySmallClass, smallClass, bigBoyClass, prepperClass, stonerClass,averageClass;
+    private CS2420Class emptyClass, verySmallClass, smallClass, bigBoyClass, prepperClass, stonerClass,averageClass, largeClass;
+
+
+    /**
+     * NOTE: You might need to change the file path depending on where your "a_small_2420_class.txt" file is.
+     */
     String smallClassFilePath = "Assignments/assign02/a_small_2420_class.txt";
 
+    Random random = new Random();
+    //Feel free to change n to whatever number you'd like. Beware, O(n) still makes a difference when n is 1000000, so proceed with caution. or dont i dont care.
     int n = 100;
 
     @BeforeEach
@@ -80,6 +88,22 @@ public class CS2420ClassTester {
                 averageClass.addScore(uNid, numAssignments, "exam");
                 averageClass.addScore(uNid, numAssignments, "quiz");
             }
+        }
+
+        //Creates a largeClass
+
+        largeClass = new CS2420Class();
+
+        int uNID = 1000000;
+        String[] names = new String[]{"tim", "bob", "fort", "nite", "brad", "smith", "jim", "josh", "hunter", "timmy"};
+        for (int i = 0; i < 100; i++) {
+            int index = random.nextInt(names.length);
+            String firstName = names[index];
+            int lastNameIndex = random.nextInt(names.length);
+            String lastName = names[lastNameIndex];
+            int emailIndex = random.nextInt(names.length);
+            largeClass.addStudent(new CS2420Student(firstName, lastName, uNID, new EmailAddress(names[emailIndex], "gmail.com")));
+            uNID += 1;
         }
 
 
@@ -546,4 +570,79 @@ public class CS2420ClassTester {
         }
     }
 
+    @Test
+    public void testBigStudentFinalGrade() {
+        for(int i = 0; i < 100; i++) {
+            int Random = random.nextInt(99);
+            CS2420Student student = largeClass.lookup((1000000 + Random));
+            student.addScore(86.5, "assignment");
+            student.addScore(75, "exam");
+            student.addScore(30, "lab");
+            student.addScore(82, "quiz");
+            student.addScore(65, "assignment");
+            student.addScore(80, "lab");
+            student.addScore(17.7, "quiz");
+            student.computeFinalScore();
+            student.addScore(70, "lab");
+            student.addScore(99.5, "exam");
+            assertTrue("C".equals(student.computeFinalGrade()));
+        }
+    }
+
+    @Test
+    public void testBigStudentFinalGradeLower() {
+        for(int i = 0; i < 100; i++) {
+            int Random = random.nextInt(99);
+            CS2420Student student = largeClass.lookup((1000000 + Random));
+            student.addScore(86.5, "assignment");
+            student.addScore(75, "exam");
+            student.addScore(30, "lab");
+            student.addScore(82, "quiz");
+            student.addScore(65, "assignment");
+            student.addScore(80, "lab");
+            student.addScore(17.7, "quiz");
+            student.computeFinalScore();
+            student.addScore(70, "lab");
+            student.addScore(54.5, "exam");
+            assertTrue("D".equals(student.computeFinalGrade()));
+        }
+    }
+
+    @Test
+    public void testLargeComputeFinalScore() {
+        for(int i = 0; i < 100; i++) {
+            int Random = random.nextInt(99);
+            CS2420Student student = largeClass.lookup((1000000 + Random));
+            student.addScore(86.5, "assignment");
+            student.addScore(75, "exam");
+            student.addScore(30, "lab");
+            student.addScore(82, "quiz");
+            student.addScore(65, "assignment");
+            student.addScore(80, "lab");
+            student.addScore(17.7, "quiz");
+            student.computeFinalScore();
+            student.addScore(70, "lab");
+            student.addScore(99.5, "exam");
+            assertEquals(76.185, student.computeFinalScore(), 0.001);
+        }
+    }
+
+    @Test
+    public void testLargeComputeFinalScoreExamLower() {
+        for(int i = 0; i < 100; i++) {
+            int Random = random.nextInt(99);
+            CS2420Student student = largeClass.lookup((1000000 + Random));
+            student.addScore(86.5, "assignment");
+            student.addScore(75, "exam");
+            student.addScore(30, "lab");
+            student.addScore(82, "quiz");
+            student.addScore(65, "assignment");
+            student.addScore(80, "lab");
+            student.addScore(17.7, "quiz");
+            student.computeFinalScore();
+            student.addScore(70, "lab");
+            student.addScore(54.5, "exam");
+            assertEquals(64.75, student.computeFinalScore(), 0.001);
+        }
+    }
 }
