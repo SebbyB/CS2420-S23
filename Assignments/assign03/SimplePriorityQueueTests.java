@@ -1,16 +1,25 @@
 package assign03;
 
+/**
+ * This Java class tests The SimplePriorityQueue class.
+ *
+ * @author Joshua Schell and Sebastian Barney
+ * @version February 2nd, 2023
+ */
 import jdk.jfr.Category;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SimplePriorityQueueTests {
 
+    //feel free to adjust to whatever parameters you want. Beware, your computer only has so much memory.
     int n = 1000;
+
+
+
 
     /**
      * Full Testing Suite for insert method. Shows it works with primitives and objects;
@@ -18,6 +27,31 @@ public class SimplePriorityQueueTests {
      * It should also show that the order things are inserted into the queue doesn't impact the success of the insertion, but does effect the time.
      */
 
+    /**
+     * Inserts n number of  into a test queue in ascending order.
+     * Since the size grows post insertion, integers get inserted into the queue.
+     */
+    @Test
+    void insertingNComparator(){
+        SimplePriorityQueue<HashMap<Integer,LinkedList<String>>> testQueue = new SimplePriorityQueue<>(new Comparator<HashMap<Integer, LinkedList<String>>>() {
+            @Override
+            public int compare(HashMap<Integer, LinkedList<String>> o1, HashMap<Integer, LinkedList<String>> o2) {
+
+                if (o1.size() > o2.size()) {
+                    return 1;
+                } else if (o1.size() < o2.size()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        for(int i = 0; i < n; i++){
+            assertEquals(testQueue.size(),i);
+            testQueue.insert(new HashMap<>());
+            assertEquals(testQueue.size(),i+1);
+        }
+    }
     /**
      * Inserts n number of integers into a test queue in ascending order.
      * Since the size grows post insertion, integers get inserted into the queue.
@@ -44,20 +78,8 @@ public class SimplePriorityQueueTests {
             assertEquals(testQueue.size(),i+1);
         }
     }
-    /**
-     * Inserts n number of Objects into a test queue in ascending order.
-     * Since the size grows post insertion, Objects get inserted into the queue.
-     */
-    @Test
-    void insertingNObjectsAscending(){
-        SimplePriorityQueue<Object> testQueue = new SimplePriorityQueue<>();
-        for(int i = 0; i < n; i++){
-            Object o = new Object();
-            assertEquals(testQueue.size(),i);
-            testQueue.insert(o);
-            assertEquals(testQueue.size(),i+1);
-        }
-    }
+
+
     /**
      * Inserts n number of integers into a test queue in descending order.
      * Since the size grows post insertion, integers get inserted into the queue.
@@ -65,10 +87,12 @@ public class SimplePriorityQueueTests {
     @Test
     void insertingNIntegersDescending(){
         SimplePriorityQueue<Integer> testQueue = new SimplePriorityQueue<>();
+        int j = 0;
         for(int i = n; i > 0; i--){
-            assertEquals(testQueue.size(),i);
+            assertEquals(testQueue.size(),j);
             testQueue.insert(i);
-            assertEquals(testQueue.size(),i+1);
+            j++;
+            assertEquals(testQueue.size(),j);
         }
     }
     /**
@@ -78,26 +102,15 @@ public class SimplePriorityQueueTests {
     @Test
     void insertingNStringDescending(){
         SimplePriorityQueue<String> testQueue = new SimplePriorityQueue<>();
+        int j = 0;
         for(int i = n; i > 0; i--){
-            assertEquals(testQueue.size(),i);
+            assertEquals(testQueue.size(),j);
             testQueue.insert(Integer.toBinaryString(i));
-            assertEquals(testQueue.size(),i+1);
+            assertEquals(testQueue.size(),j+1);
+            j++;
         }
     }
-    /**
-     * Inserts n number of Objects into a test queue in descending order.
-     * Since the size grows post insertion, Objects get inserted into the queue.
-     */
-    @Test
-    void insertingNObjectsDescending(){
-        SimplePriorityQueue<Object> testQueue = new SimplePriorityQueue<>();
-        for(int i = n; i > 0; i--){
-            Object o = new Object();
-            assertEquals(testQueue.size(),i);
-            testQueue.insert(o);
-            assertEquals(testQueue.size(),i+1);
-        }
-    }
+
 
     /**
      * Full Testing Suite for insertAll method.
@@ -106,41 +119,7 @@ public class SimplePriorityQueueTests {
      */
 
 
-    /**
-     * Creates a collection of objects and inserts that collection into the queue.
-     * Shows that order doesn't impact success but does impact insert times.
-     */
-    @Test
-    void insertAllNObjects(){
 
-        SimplePriorityQueue<Object> testQueue = new SimplePriorityQueue<>();
-        ArrayList<Object> testList = new ArrayList<>();
-        //Ascending
-        for(i = 0; i < n; i++){
-            Object o = new Object();
-            assertEquals(i,testList.size());
-            testList.add(o);
-            assertEquals(i+1,testList.size());
-        }
-        assertEquals(0,testQueue.size());
-        testQueue.insertAll(testList);
-        assertEquals(n,testQueue.size());
-
-
-
-        testQueue.clear();
-        testList.clear();
-        //Descending
-        for(int i = n; i > 0; i--){
-            Object o = new Object();
-            assertEquals(i,testList.size());
-            testList.add(o);
-            assertEquals(i+1,testList.size());
-        }
-        assertEquals(0,testQueue.size());
-        testQueue.insertAll(testList);
-        assertEquals(n,testQueue.size());
-    }
 
     /**
      * Creates a collection of Integers and inserts that collection into the queue.
@@ -152,7 +131,7 @@ public class SimplePriorityQueueTests {
         SimplePriorityQueue<Integer> testQueue = new SimplePriorityQueue<>();
         ArrayList<Integer> testList = new ArrayList<>();
         //Ascending
-        for(i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){
             assertEquals(i,testList.size());
             testList.add(i);
             assertEquals(i+1,testList.size());
@@ -166,10 +145,12 @@ public class SimplePriorityQueueTests {
         testQueue.clear();
         testList.clear();
         //Descending
+        int j = 0;
         for(int i = n; i > 0; i--){
-            assertEquals(i,testList.size());
+            assertEquals(j,testList.size());
             testList.add(i);
-            assertEquals(i+1,testList.size());
+            j++;
+            assertEquals(j,testList.size());
         }
         assertEquals(0,testQueue.size());
         testQueue.insertAll(testList);
@@ -199,10 +180,12 @@ public class SimplePriorityQueueTests {
         testQueue.clear();
         testList.clear();
         //Descending
+        int j = 0;
         for(int i = n; i > 0; i--){
-            assertEquals(i,testList.size());
+            assertEquals(j,testList.size());
             testList.add(Integer.toString(i));
-            assertEquals(i+1,testList.size());
+            j++;
+            assertEquals(j,testList.size());
         }
         assertEquals(0,testQueue.size());
         testQueue.insertAll(testList);
@@ -351,26 +334,7 @@ public class SimplePriorityQueueTests {
      */
 
 
-    /**
-     * Shows that the maximum value in a queue is dynamic.
-     */
-    @Test
-    void maxIncreasesStrings(){
 
-        //Creates a testQueue which is empty to start.
-        SimplePriorityQueue<String> testQueue = new SimplePriorityQueue<>();
-        assertEquals(0,testQueue.size());
-        assertTrue(testQueue.isEmpty());
-
-        assertThrows(NoSuchElementException.class, () -> {testQueue.findMax();});
-        //Populates the queue and shows the max changes every time.
-        for(int i = 1; i <= n; i++){
-            testQueue.insert(Integer.toString(i));
-            assertEquals(i,testQueue.findMax());
-
-        }
-
-    }
 
     /**
      * Shows that the maximum value in a queue is dynamic.
@@ -391,25 +355,6 @@ public class SimplePriorityQueueTests {
 
         }
 
-    }
-
-    /**
-     * Shows the maximum of a queue is static when smaller items are added.
-     */
-    @Test
-    void staticMaxStrings(){
-        //Creates a testQueue which is empty to start.
-        SimplePriorityQueue<String> testQueue = new SimplePriorityQueue<>();
-        assertEquals(0,testQueue.size());
-        assertTrue(testQueue.isEmpty());
-
-        assertThrows(NoSuchElementException.class, () -> {testQueue.findMax();});
-        //Populates the queue and shows the max stays the same every time.
-        for(int i = n; i >= 0; i--){
-            testQueue.insert(Integer.toString(i));
-            assertEquals(n,testQueue.findMax());
-
-        }
     }
 
     /**
@@ -528,4 +473,52 @@ public class SimplePriorityQueueTests {
 
     }
 
+    /**
+     * Testing suite for contains.
+     * Shows contains() works as intended.
+     * Shows contains() works on empty queues.
+     * Shows it works generically.
+     */
+
+
+    /**
+     * Shows that the contains function works as intended.
+     */
+    @Test
+    void containsInts(){
+
+        SimplePriorityQueue<Integer> testQueue = new SimplePriorityQueue<>();
+
+        for(int i = 0; i < n; i++){
+            assertFalse(testQueue.contains(i));
+            testQueue.insert(i);
+            assertTrue(testQueue.contains(i));
+        }
+    }
+
+    /**
+     * Shows that the contains function works as intended.
+     */
+    @Test
+    void containsStrings(){
+
+        SimplePriorityQueue<String> testQueue = new SimplePriorityQueue<>();
+
+        for(int i = 0; i < n; i++){
+            assertFalse(testQueue.contains(Integer.toString(i)));
+            testQueue.insert(Integer.toString(i));
+            assertTrue(testQueue.contains(Integer.toString(i)));
+        }
+    }
+
+    /**
+     * Shows that the contains method works on empty queues.
+     */
+    @Test
+    void containsOnEmpty(){
+        SimplePriorityQueue<String> testQueue = new SimplePriorityQueue<>();
+
+        assertDoesNotThrow(()->testQueue.contains("fortnite"));
+        assertFalse(testQueue.contains("coolstringthatisn'tinthequeue"));
+    }
 }
