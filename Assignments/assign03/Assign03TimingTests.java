@@ -107,10 +107,12 @@ public class Assign03TimingTests {
     public static String findMaxTiming(int sizeOfList, int timesToLoop) {
 
         SimplePriorityQueue<Integer> testQueue = new SimplePriorityQueue<>();
-        for (int i = sizeOfList; i >  0; i--) {
-            testQueue.insert(i);
+        Integer[] arr = new Integer[sizeOfList];
+        for (int i = sizeOfList - 1; i >=  0; i--) {
+            arr[i] = i;
         }
 
+        testQueue.setArr(arr);
         Long startTime = System.nanoTime();
         for (int timesLooped = 0; timesLooped < timesToLoop; timesLooped++) {
           testQueue.findMax();
@@ -186,8 +188,9 @@ public class Assign03TimingTests {
 
         ArrayList<String[]> data = new ArrayList<>();
         System.out.println("Collecting Data with Parameters:");
-        String[] parameters = {"SizeN", "findMax time (ns)", "insert time Best (ns)", "insert time Worst (ns)"};
+//        String[] parameters = {"SizeN", "findMax time (ns)", "insert time Best (ns)", "insert time Worst (ns)"};
 //        String[] parameters = {"SizeN", "findMax time (ns)", "insert time (ns)"};
+        String[] parameters = {"SizeN", "findMax time (ns)"};
         data.add(parameters);
         System.out.print(Color.BLUE_UNDERLINED);
         for (String parameter : parameters) {
@@ -213,11 +216,12 @@ public class Assign03TimingTests {
 
             String N = Integer.toString(size);
             String findMaxTiming = findMaxTiming(size,timesToLoop);
-            String insertBest = insertTimingBest(size,timesToLoop);
-            String insertWorst = insertTimingWorst(size,timesToLoop);
+//            String insertBest = insertTimingBest(size,timesToLoop);
+//            String insertWorst = insertTimingWorst(size,timesToLoop);
 
-//            String[] dataPoint = new String[]{N, findMaxTiming,insertWorst};
-            String[] dataPoint = new String[]{N, findMaxTiming,insertBest,insertWorst};
+            String[] dataPoint = new String[]{N, findMaxTiming};
+//            String[] dataPoint = new String[]{N, findMaxTiming,insertBest};
+//            String[] dataPoint = new String[]{N, findMaxTiming,insertBest,insertWorst};
             if (size == 1) {
                 size--;
             }

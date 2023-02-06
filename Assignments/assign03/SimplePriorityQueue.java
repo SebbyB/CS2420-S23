@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
  */
 public class SimplePriorityQueue<E> implements PriorityQueue<E> {
 
-    private E[] arr;
+    public E[] arr;
     private int size;
     private Comparator<E> cmp;
 
@@ -67,6 +67,12 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E> {
     }
 
 
+    public void setArr(E[] array){
+        arr = (E[])new Object[arr.length];
+        for (int i = 0; i < array.length; i++){
+            arr[i] = array[i];
+        }
+    }
     /**
      * Basic Constructor for a SimplePriorityQueue
      */
