@@ -170,20 +170,20 @@ public class ArrayListSorter {
     }
 
     /**
-     *
-     * @param arr
-     * @param <T>
+     *Quicksorts an array
+     * @param arr array to be sorted
+     * @param <T> arbitrary type
      */
     public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr) {
         recursiveQuicksort(arr, 0, arr.size() - 1);
     }
 
     /**
-     *
-     * @param arr
-     * @param left
-     * @param right
-     * @param <T>
+     *Recursive part of quicksort alg.
+     * @param arr array to be sorted.
+     * @param left left most index to be sorted.
+     * @param right right most index to be sorted.
+     * @param <T> Arbitrary type.
      */
     private static <T extends Comparable<? super T>> void recursiveQuicksort(ArrayList<T> arr, int left, int right) {
         if (right - left < threshold) {
@@ -215,9 +215,9 @@ public class ArrayListSorter {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * Generates an ascending list of integerse
+     * @param size - size of list.
+     * @return list of ints
      */
     public static ArrayList<Integer> generateAscending(int size) {
 
@@ -229,9 +229,9 @@ public class ArrayListSorter {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * Generates a permuted list of integers of a certain size.
+     * @param size size of list.
+     * @return - list of ints
      */
     public static ArrayList<Integer> generatePermuted(int size) {
         ArrayList<Integer> Permuted = generateAscending(size);
@@ -240,9 +240,9 @@ public class ArrayListSorter {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * Generates a descending list of integers
+     * @param size - size of list.
+     * @return list
      */
     public static ArrayList<Integer> generateDescending(int size) {
 
